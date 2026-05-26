@@ -13,3 +13,5 @@ const (
 	PHONE_TYPE = "PJF110_Android 15"
 	USER_AGENT = "Mozilla/5.0 (Linux; Android 15; PJF110 Build/UKQ1.231108.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.6723.103 Mobile Safari/537.36 XWEB/1300409 MMWEBSDK/20240404 MMWEBID/1532 MicroMessenger/8.0.49.2600(0x28003133) WeChat/arm64 Weixin NetType/5G Language/zh_CN ABI/arm64 MiniProgramEnv/android"
 )
+
+var SportsField = map[string]string{"T1001": "风华运动场", "T1005": "太极运动场", "T1014": "宁静苑"}

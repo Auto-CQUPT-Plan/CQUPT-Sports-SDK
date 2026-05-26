@@ -82,3 +82,23 @@ type TermInfoData struct {
 	EndDate     string `json:"endDate"`
 	IsCurrent   string `json:"isCurrent"`
 }
+
+type AllSportsResults struct {
+	Msg  string                 `json:"msg"`
+	Code string                 `json:"code"`
+	Data []AllSportsResultsData `json:"data"`
+}
+
+type AllSportsResultsData struct {
+	SportsResultNo  string      `json:"sportsResultNo"`
+	SportsType      string      `json:"sportsType"`
+	IsValid         string      `json:"isValid"`
+	SportsStartTime string      `json:"sportsStartTime"`
+	SportsEndTime   string      `json:"sportsEndTime"`
+	PlaceName       string      `json:"placeName"`
+	ReckonType      interface{} `json:"reckonType"`
+	Duration        int64       `json:"duration"`
+	Distance        int64       `json:"distance"`
+	IsAppeal        string      `json:"isAppeal"`
+	Reason          string      `json:"reason"`
+}

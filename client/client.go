@@ -212,4 +212,51 @@ func (r *Client) GetTerm(token string) (*models.TermInfo, error) {
 	return &termInfo, nil
 }
 
-func (r *Client)
+func (r *Client) GetAllSportsResult(token string, term string) (*models.AllSportsResults, error) {
+	var allSportsResults models.AllSportsResults
+
+	url, err := url2.Parse(consts.GET_SPORTS_RESULT_URL)
+	if err != nil {
+		return nil, err
+	}
+
+	query := url.Query()
+	{
+		query.Add("yearTerm", term)
+		query.Add("weekly", "")
+		query.Add("sportsType", "")
+		query.Add("isValid", "")
+		query.Add("reckonType", "")
+	}
+	url.RawQuery = query.Encode()
+
+	req, err := http.NewRequest("GET", url.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("User-Agent", consts.USER_AGENT)
+	req.Header.Add("token", token)
+
+	resp, err := r.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		if resp.Body != nil {
+			resp.Body.Close()
+		}
+	}()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status error: %v", resp.StatusCode)
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&allSportsResults)
+	if err != nil {
+		return nil, err
+	}
+
+	return &allSportsResults, nil
+}
