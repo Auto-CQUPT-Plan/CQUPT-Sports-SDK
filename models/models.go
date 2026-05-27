@@ -97,8 +97,92 @@ type AllSportsResultsData struct {
 	SportsEndTime   string      `json:"sportsEndTime"`
 	PlaceName       string      `json:"placeName"`
 	ReckonType      interface{} `json:"reckonType"`
-	Duration        int64       `json:"duration"`
-	Distance        int64       `json:"distance"`
+	Duration        float64     `json:"duration"`
+	Distance        float64     `json:"distance"`
 	IsAppeal        string      `json:"isAppeal"`
 	Reason          string      `json:"reason"`
+}
+
+type StartRunningPostData struct {
+	PlaceName string `json:"placeName"`
+	PlaceCode string `json:"placeCode"`
+}
+
+type StartRunningResp struct {
+	Msg  string `json:"msg"`
+	Code string `json:"code"`
+	Data string `json:"data"`
+}
+
+type CurrentRunningInfo struct {
+	Msg  string             `json:"msg"`
+	Code string             `json:"code"`
+	Data CurrentRunningData `json:"data"`
+}
+
+type CurrentRunningData struct {
+	SportRecordNo               string         `json:"sportRecordNo"`
+	UnifyId                     string         `json:"unifyId"`
+	StudentName                 string         `json:"studentName"`
+	Mileage                     float64        `json:"mileage"`
+	TimeConsuming               int64          `json:"timeConsuming"`
+	ExpiredCountInForbiddenArea int64          `json:"expiredCountInForbiddenArea"`
+	Points                      []PointsEntity `json:"points"`
+	RunningCount                string         `json:"runningCount"`
+}
+
+type PointsEntity struct {
+	Id            interface{} `json:"id"`
+	SportPointNo  string      `json:"sportPointNo"`
+	SportRecordNo string      `json:"sportRecordNo"`
+	Longitude     string      `json:"longitude"`
+	Latitude      string      `json:"latitude"`
+	CollectTime   string      `json:"collectTime"`
+	IsValid       string      `json:"isValid"`
+	AfterPoints   interface{} `json:"afterPoints"`
+	CreateBy      string      `json:"createBy"`
+	CreateName    string      `json:"createName"`
+	CreateTime    string      `json:"createTime"`
+	UpdateBy      interface{} `json:"updateBy"`
+	UpdateName    interface{} `json:"updateName"`
+	UpdateTime    interface{} `json:"updateTime"`
+	Remark        string      `json:"remark"`
+}
+
+type RunningLocationPointPostData struct {
+	SportRecordNo  string               `json:"sportRecordNo"`
+	SportPointList []SportPointListNode `json:"sportPointList"`
+}
+
+type SportPointListNode struct {
+	SportRecordNo string  `json:"sportRecordNo"`
+	Longitude     float64 `json:"longitude"`
+	Latitude      float64 `json:"latitude"`
+	PlaceName     string  `json:"placeName"`
+	PlaceCode     string  `json:"placeCode"`
+	CollectTime   string  `json:"collectTime"`
+	IsValid       string  `json:"isValid"`
+}
+
+type RunningLocationPointResp struct {
+	Msg  string                       `json:"msg"`
+	Code string                       `json:"code"`
+	Data RunningLocationPointRespData `json:"data"`
+}
+
+type RunningLocationPointRespData struct {
+	SportRecordNo               string      `json:"sportRecordNo"`
+	UnifyId                     string      `json:"unifyId"`
+	StudentName                 string      `json:"studentName"`
+	Mileage                     float64     `json:"mileage"`
+	TimeConsuming               int64       `json:"timeConsuming"`
+	ExpiredCountInForbiddenArea int64       `json:"expiredCountInForbiddenArea"`
+	Points                      interface{} `json:"points"`
+	RunningCount                string      `json:"runningCount"`
+}
+
+type FinishRunningResp struct {
+	Msg  string `json:"msg"`
+	Code string `json:"code"`
+	Data bool   `json:"data"`
 }

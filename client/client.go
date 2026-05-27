@@ -1,10 +1,12 @@
 package client
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	url2 "net/url"
+	"path"
 
 	"github.com/Auto-CQUPT-Plan/CQUPT-Sports-SDK/consts"
 	"github.com/Auto-CQUPT-Plan/CQUPT-Sports-SDK/models"
@@ -259,4 +261,177 @@ func (r *Client) GetAllSportsResult(token string, term string) (*models.AllSport
 	}
 
 	return &allSportsResults, nil
+}
+
+func (r *Client) StartRunning(token string, fieldID string) (*models.StartRunningResp, error) {
+	var startRunningResp models.StartRunningResp
+
+	url, err := url2.Parse(consts.START_RUNNING_URL)
+	if err != nil {
+		return nil, err
+	}
+
+	postBody, err := json.Marshal(models.StartRunningPostData{PlaceName: consts.SportsField[fieldID], PlaceCode: fieldID})
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", url.String(), bytes.NewBuffer(postBody))
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Add("User-Agent", consts.USER_AGENT)
+	req.Header.Add("token", token)
+
+	resp, err := r.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		if resp.Body != nil {
+			resp.Body.Close()
+		}
+	}()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status error: %v", resp.StatusCode)
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&startRunningResp)
+	if err != nil {
+		return nil, err
+	}
+
+	return &startRunningResp, nil
+}
+
+func (r *Client) GetCurrentRunningInfo(token string, runningEventID string) (*models.CurrentRunningInfo, error) {
+	var currentRunningInfo models.CurrentRunningInfo
+
+	url, err := url2.Parse(consts.GET_CURRENT_RUNNING_INFO)
+	if err != nil {
+		return nil, err
+	}
+
+	url.Path = path.Join(url.Path, runningEventID)
+
+	req, err := http.NewRequest("GET", url.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("User-Agent", consts.USER_AGENT)
+	req.Header.Add("token", token)
+
+	resp, err := r.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		if resp.Body != nil {
+			resp.Body.Close()
+		}
+	}()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status error: %v", resp.StatusCode)
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&currentRunningInfo)
+	if err != nil {
+		return nil, err
+	}
+
+	return &currentRunningInfo, nil
+}
+
+func (r *Client) UpdateRunningPoint(token string, runningEventID string, pointData []models.SportPointListNode) (*models.RunningLocationPointResp, error) {
+	var runningLocationPointResp models.RunningLocationPointResp
+
+	url, err := url2.Parse(consts.UPDATE_RUNNING_POINT)
+	if err != nil {
+		return nil, err
+	}
+
+	postData, err := json.Marshal(models.RunningLocationPointPostData{SportRecordNo: runningEventID, SportPointList: pointData})
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", url.String(), bytes.NewBuffer(postData))
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Add("User-Agent", consts.USER_AGENT)
+	req.Header.Add("token", token)
+
+	resp, err := r.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		if resp.Body != nil {
+			resp.Body.Close()
+		}
+	}()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status error: %v", resp.StatusCode)
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&runningLocationPointResp)
+	if err != nil {
+		return nil, err
+	}
+
+	return &runningLocationPointResp, nil
+}
+
+func (r *Client) FinishRunning(token string, runningEventID string) (*models.FinishRunningResp, error) {
+	var finishRunningResp models.FinishRunningResp
+
+	url, err := url2.Parse(consts.FINISH_RUNNING_URL)
+	if err != nil {
+		return nil, err
+	}
+
+	url.Path = path.Join(url.Path, runningEventID)
+
+	req, err := http.NewRequest("POST", url.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Add("User-Agent", consts.USER_AGENT)
+	req.Header.Add("token", token)
+
+	resp, err := r.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		if resp.Body != nil {
+			resp.Body.Close()
+		}
+	}()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status error: %v", resp.StatusCode)
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&finishRunningResp)
+	if err != nil {
+		return nil, err
+	}
+
+	return &finishRunningResp, nil
 }

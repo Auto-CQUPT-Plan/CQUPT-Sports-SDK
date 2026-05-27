@@ -1,12 +1,16 @@
 package consts
 
 const (
-	GET_TOKEN_URL         = "https://sport.cqupt.edu.cn/new_wxapp/wxUnifyId/checkBinding"
-	GET_USER_INFO_URL     = "https://sport.cqupt.edu.cn/new_wxapp/wxUnifyId/getUser"
-	GET_NOTICE_URL        = "https://sport.cqupt.edu.cn/new_wxapp/notice/getNotice"
-	GET_ALL_AREA_URL      = "https://sport.cqupt.edu.cn/new_wxapp/area/getAllArea"
-	GET_TERM_URL          = "https://sport.cqupt.edu.cn/new_wxapp/yearTerm/list"
-	GET_SPORTS_RESULT_URL = "https://sport.cqupt.edu.cn/new_wxapp/sportsResult/list"
+	GET_TOKEN_URL            = "https://sport.cqupt.edu.cn/new_wxapp/wxUnifyId/checkBinding"
+	GET_USER_INFO_URL        = "https://sport.cqupt.edu.cn/new_wxapp/wxUnifyId/getUser"
+	GET_NOTICE_URL           = "https://sport.cqupt.edu.cn/new_wxapp/notice/getNotice"
+	GET_ALL_AREA_URL         = "https://sport.cqupt.edu.cn/new_wxapp/area/getAllArea"
+	GET_TERM_URL             = "https://sport.cqupt.edu.cn/new_wxapp/yearTerm/list"
+	GET_SPORTS_RESULT_URL    = "https://sport.cqupt.edu.cn/new_wxapp/sportsResult/list"
+	START_RUNNING_URL        = "https://sport.cqupt.edu.cn/new_wxapp/sportRecord/sport/start2"
+	GET_CURRENT_RUNNING_INFO = "https://sport.cqupt.edu.cn/new_wxapp/sportRecord/info"
+	UPDATE_RUNNING_POINT     = "https://sport.cqupt.edu.cn/new_wxapp/sportRecord/point/saveListByNo"
+	FINISH_RUNNING_URL       = "https://sport.cqupt.edu.cn/new_wxapp/sportRecord/sport/end"
 )
 
 const (
